@@ -1,0 +1,113 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+.button {
+	background-color: #4CAF50; /* Green */
+	border: none;
+	color: #4CAF50;
+	padding: 10px 22px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 15px;
+	margin: 4px 2px;
+	transition-duration: 1.0s;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.button1 {
+	background-color: #4CAF50;
+	color: white;
+	border: 2px solid #4CAF50;
+}
+
+.button1:hover {
+	background-color: white;
+	color: black;
+}
+
+.button2 {
+	background-color: #008CBA; /* Blue */
+	color: white;
+	border: 2px solid #008CBA;
+}
+
+.button2:hover {
+	background-color: white;
+	color: black;
+}
+</style>
+<meta charset="UTF-8">
+<title>Add New Contract</title>
+<script type="text/javascript">
+	<!-- Validating user input, give alert and set focus if invalid -->
+	function validate() {
+		if (document.myForm.rocket.value == "") {
+			alert("You must enter a rocket to continue.");
+			document.myForm.rocket.focus();
+			return false;
+		}
+		if( document.myForm.launchProvider.value == "" ) {
+            alert( "You must enter a launch provider." );
+            document.myForm.launchProvider.focus() ;
+            return false;
+         }
+         if( document.myForm.beneficiary.value == "" ){
+            alert( "You must enter a beneficiary." );
+            document.myForm.beneficiary.focus() ;
+            return false;
+         }
+         if( document.myForm.cost.value == "" || isNaN( document.myForm.cost.value ) ||
+        		 document.myForm.cost.value <= 0 ) {
+            alert( "Please enter numbers only, cost must be greater than zero." );
+            document.myForm.cost.focus() ;
+            return false;
+         }
+	}
+</script>
+</head>
+<body>
+	<fieldset>
+		<!-- Form Name -->
+		<legend>Add a new contract</legend>
+		<form action="/cgi-bin/test.cgi" name="myForm"
+			onsubmit="return(validate());" th:object="${newContract}"
+			th:action="@{/update/{id}(id=${newContract.id})}" method=POST>
+			Launch Date (optional): <input name="launchDate" size="10" type="date" th:field="*{launchDate}"> <br/> <br>
+			Rocket: <input name="rocket" size="31" th:field="*{rocket}"><br /> <br>
+			Launch Provider: <input name="launchProvider" size="22" th:field="*{launchProvider}"><br/> <br>
+			Beneficiary: <input name="beneficiary" size="27" th:field="*{beneficiary}"><br /> <br>
+			Cost (in thousands of dollars): <input required="" name="cost" size="27" th:field="*{cost}"><br /> <br>
+			<input class="button button1" name="submit" type="submit" value="submit" /><br>
+		</form>
+		<form action="viewAll">
+			<button class="button button2" type="submit">View all
+				contracts</button>
+		</form>
+	</fieldset>
+
+	<!-- 
+<form class="form-horizontal">
+		<fieldset>
+			
+			<legend>Add a new contract</legend>
+			<form action="/cgi-bin/test.cgi" name="myForm"
+				onsubmit="return(validate());" th:object="${newContract}"
+				th:action="@{/update/{id}(id=${newContract.id})}" method=POST>
+				Launch Date (optional): <input name="launchDate" type="date" th:field="*{launchDate}"> <br/> <br>
+				Rocket: <input name="rocket" size="31" th:field="*{rocket}"><br /> <br>
+				Launch Provider: <input name="launchProvider" size="22" th:field="*{launchProvider}"><br/> <br>
+				Beneficiary: <input name="beneficiary" size="27" th:field="*{beneficiary}"><br /> <br>
+				Cost (USD): <input required="" name="cost" size="27" th:field="*{cost}"><br /> <br>
+				<input class="button button1" name="submit" type="submit" value="submit" /><br><br>
+			</form>
+			<form action="viewAll">
+				<button class="button button2" type="submit">View all contracts</button>
+			</form>
+		</fieldset>
+</form>
+ -->
+
+</body>
+</html>
